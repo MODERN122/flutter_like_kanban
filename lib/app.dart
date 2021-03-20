@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n_delegate.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:likekanban/blocs/auth_bloc.dart';
 import 'package:likekanban/blocs/cards_bloc.dart';
 import 'package:likekanban/styles/colors.dart';
+import 'package:likekanban/screens/home.dart';
+import 'package:likekanban/screens/login.dart';
 import 'package:provider/provider.dart';
-
-import 'screens/home.dart';
-import 'screens/login.dart';
 
 final authBloc = AuthBloc();
 final cardsBloc = CardsBloc();
 
 class App extends StatefulWidget {
+  final FlutterI18nDelegate flutterI18nDelegate;
+
+  App(this.flutterI18nDelegate);
+
   @override
   _AppState createState() => _AppState();
 }
@@ -29,6 +34,11 @@ class _AppState extends State<App> {
           theme: ThemeData(
               scaffoldBackgroundColor: BaseColors.background,
               appBarTheme: AppBarTheme(color: BaseColors.header)),
+          localizationsDelegates: [
+            widget.flutterI18nDelegate,
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+          ],
         ));
   }
 

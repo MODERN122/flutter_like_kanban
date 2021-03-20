@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:likekanban/blocs/auth_bloc.dart';
 import 'package:likekanban/widgets/button.dart';

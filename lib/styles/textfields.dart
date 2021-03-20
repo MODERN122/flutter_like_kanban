@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:likekanban/styles/base.dart';
 import 'package:likekanban/styles/colors.dart';
 import 'package:likekanban/styles/text.dart';
-import 'package:flutter/material.dart';
 
 abstract class TextFieldStyles {
   static double get textBoxHorizontal => BaseStyles.horizontal;

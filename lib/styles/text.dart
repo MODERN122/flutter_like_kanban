@@ -1,5 +1,5 @@
-import 'package:likekanban/styles/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:likekanban/styles/colors.dart';
 
 abstract class TextStyles {
   static TextStyle get textfieldBody {

@@ -1,6 +1,5 @@
-import 'package:likekanban/styles/textfields.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:likekanban/styles/textfields.dart';
 
 class ExtendedTextField extends StatefulWidget {
   final String hintText;
