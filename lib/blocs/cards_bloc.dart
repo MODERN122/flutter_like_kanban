@@ -12,8 +12,10 @@ class CardsBloc {
   // Setters
   Function(List<AppCard>) get changeCards => _cards.sink.add;
 
-  Stream<List<AppCard>> fetchtest(String row, String token) =>
-      _db.fetchCardsByRowName(row, token).asStream();
+  Stream<List<AppCard>> fetchCardsByRowName(String row, String token) => _db
+      .fetchCardsByRowName(row, token)
+      .catchError((error) => print(error))
+      .asStream();
 
   // Functions
   // fetchCardsByRowName(String row) => _db
