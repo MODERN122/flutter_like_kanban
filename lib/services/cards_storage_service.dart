@@ -16,15 +16,14 @@ class CardsStorageService {
     // return cards;
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (Options options) {
       _dio.interceptors.requestLock.lock();
-      options.headers["Authorization"] = token;
+      options.headers["Authorization"] = 'JWT $token';
       _dio.interceptors.requestLock.unlock();
       return options;
     }));
     final response = await _dio
-        .get("https://trello.backend.tests.nekidaem.ru/api/v1/cards/");
+        .get("https://trello.backend.tests.nekidaem.ru/api/v1/cards/?row=$row");
     return response.data
         .map<AppCard>((card) => AppCard.fromJson(card))
-        .where((card) => card.row == row)
         .toList();
   }
 }

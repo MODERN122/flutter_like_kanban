@@ -57,44 +57,35 @@ class _HomeState extends State<Home> {
     return DefaultTabController(
       length: Home.tabPages.length,
       child: Scaffold(
-        body: NestedScrollView(
-          headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-            return <Widget>[
-              SliverAppBar(
-                actions: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      right: 10.0,
-                      top: 10.0,
-                    ),
-                    child: Ink(
-                      decoration: ShapeDecoration(
-                        color: BaseColors.lightCyan,
-                        shape: CircleBorder(),
-                      ),
-                      child: IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: authBloc.logout,
-                        color: BaseColors.pureWhite,
-                      ),
-                    ),
-                  ),
-                ],
-                backgroundColor: BaseColors.header,
-                bottom: Home.kanbanTabBar,
-                floating: true,
-                pinned: true,
-                snap: true,
+        appBar: AppBar(
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(
+                right: 10.0,
+                top: 10.0,
               ),
-            ];
-          },
-          body: TabBarView(
-            children: Home.tabPages.keys
-                .map(
-                  (row) => Cards(row),
-                )
-                .toList(),
-          ),
+              child: Ink(
+                decoration: ShapeDecoration(
+                  color: BaseColors.lightCyan,
+                  shape: CircleBorder(),
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back),
+                  onPressed: authBloc.logout,
+                  color: BaseColors.pureWhite,
+                ),
+              ),
+            ),
+          ],
+          backgroundColor: BaseColors.header,
+          bottom: Home.kanbanTabBar,
+        ),
+        body: TabBarView(
+          children: Home.tabPages.keys
+              .map(
+                (row) => Cards(row),
+              )
+              .toList(),
         ),
       ),
     );

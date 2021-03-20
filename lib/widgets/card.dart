@@ -24,13 +24,14 @@ class ExtendedAppCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(5.0),
       ),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(5.0),
             child: Text('ID: $id', style: TextStyles.cardTitle),
           ),
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(5.0),
             child: Text(text, style: TextStyles.cardBody),
           ),
         ],

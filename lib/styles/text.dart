@@ -29,7 +29,7 @@ abstract class TextStyles {
   }
 
   static TextStyle get cardTitle {
-    return TextStyle(color: BaseColors.pureWhite, fontSize: 10.0);
+    return TextStyle(color: BaseColors.pureWhite, fontSize: 12.0);
   }
 
   static TextStyle get cardBody {
