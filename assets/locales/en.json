@@ -1,0 +1,25 @@
+{
+    "textfield": {
+        "login": {
+            "hint": "Enter your username",
+            "error": "Minimum is 4 characters"
+        },
+        "password": {
+            "hint": "Enter your password",
+            "error": "Minimum is 8 characters"
+        }
+    },
+    "button": {
+        "login": {
+            "enter": "Log in"
+        }
+    },
+    "tabbar": {
+        "header": {
+            "0": "On hold",
+            "1": "In progress",
+            "2": "Needs review",
+            "3": "Approved"
+        }
+    }
+}
