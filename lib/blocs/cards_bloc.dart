@@ -17,15 +17,6 @@ class CardsBloc {
       .catchError((error) => print(error))
       .asStream();
 
-  // Functions
-  // fetchCardsByRowName(String row) => _db
-  //         .fetchCardsByRowName(row)
-  //         .then((cards) => changeCards(cards))
-  //         .catchError((error) {
-  //       print(error);
-  //       changeCards(List<AppCard>());
-  //     });
-
   dispose() {
     _cards.close();
   }

@@ -5,7 +5,8 @@ class CardsStorageService {
   Dio _dio = Dio();
 
   Future<List<AppCard>> fetchCardsByRowName(String row, String token) async {
-    _dio.interceptors.add(InterceptorsWrapper(onRequest: (Options options) {
+    _dio.interceptors.add(InterceptorsWrapper(
+        onRequest: (RequestOptions options, RequestInterceptorHandler handler) {
       _dio.interceptors.requestLock.lock();
       options.headers["Authorization"] = 'JWT $token';
       _dio.interceptors.requestLock.unlock();

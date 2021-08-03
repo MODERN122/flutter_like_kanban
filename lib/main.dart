@@ -10,7 +10,7 @@ void main() async {
       useCountryCode: false,
       fallbackFile: 'en',
       basePath: 'assets/locales',
-      forcedLocale: Locale('en'),
+      forcedLocale: Locale('ru'),
     ),
   );
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,11 +1,10 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:likekanban/blocs/auth_bloc.dart';
-import 'package:likekanban/styles/colors.dart';
-import 'package:likekanban/styles/tabbar.dart';
 import 'package:likekanban/widgets/cards.dart';
-import 'package:provider/provider.dart';
+
+import 'bloc/cards_bloc.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -17,9 +16,6 @@ class _HomeState extends State<Home> {
 
   TabBar kanbanTabBar(Map<String, String> tabs) {
     return TabBar(
-      unselectedLabelColor: TabBarStyles.unselectedLabelColor,
-      labelColor: TabBarStyles.labelColor,
-      indicatorColor: TabBarStyles.indicatorColor,
       tabs: tabs.values
           .map(
             (tab) => Tab(text: tab),
@@ -30,7 +26,7 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    var authBloc = Provider.of<AuthBloc>(context, listen: false);
+    var authBloc = BlocProvider.of<CardsBloc>(context, listen: false);
     _userChangedSubscription = authBloc.user.listen((user) {
       if (user == null)
         Navigator.of(context)
@@ -53,7 +49,6 @@ class _HomeState extends State<Home> {
       '2': FlutterI18n.translate(context, "tabbar.home.2"),
       '3': FlutterI18n.translate(context, "tabbar.home.3"),
     };
-    final authBloc = Provider.of<AuthBloc>(context, listen: false);
     return DefaultTabController(
       length: tabPages.length,
       child: Scaffold(
@@ -62,18 +57,16 @@ class _HomeState extends State<Home> {
             Container(
               child: Ink(
                 decoration: ShapeDecoration(
-                  color: BaseColors.lightCyan,
                   shape: CircleBorder(),
                 ),
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: authBloc.logout,
-                  color: BaseColors.pureWhite,
-                ),
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      BlocProvider.of<CardsBloc>(context).add(CardsEvent());
+                    }),
               ),
             ),
           ],
-          backgroundColor: BaseColors.header,
           bottom: kanbanTabBar(tabPages),
         ),
         body: TabBarView(
