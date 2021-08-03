@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:likekanban/blocs/auth_bloc.dart';
 import 'package:likekanban/styles/colors.dart';
 import 'package:likekanban/styles/tabbar.dart';
@@ -9,30 +10,23 @@ import 'package:provider/provider.dart';
 class Home extends StatefulWidget {
   @override
   _HomeState createState() => _HomeState();
+}
 
-  static Map<String, String> tabPages = {
-    '0': 'On hold',
-    '1': 'In progress',
-    '2': 'Needs review',
-    '3': 'Approved',
-  };
+class _HomeState extends State<Home> {
+  StreamSubscription _userChangedSubscription;
 
-  static TabBar get kanbanTabBar {
+  TabBar kanbanTabBar(Map<String, String> tabs) {
     return TabBar(
       unselectedLabelColor: TabBarStyles.unselectedLabelColor,
       labelColor: TabBarStyles.labelColor,
       indicatorColor: TabBarStyles.indicatorColor,
-      tabs: tabPages.values
+      tabs: tabs.values
           .map(
             (tab) => Tab(text: tab),
           )
           .toList(),
     );
   }
-}
-
-class _HomeState extends State<Home> {
-  StreamSubscription _userChangedSubscription;
 
   @override
   void initState() {
@@ -53,17 +47,19 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    var tabPages = {
+      '0': FlutterI18n.translate(context, "tabbar.home.0"),
+      '1': FlutterI18n.translate(context, "tabbar.home.1"),
+      '2': FlutterI18n.translate(context, "tabbar.home.2"),
+      '3': FlutterI18n.translate(context, "tabbar.home.3"),
+    };
     final authBloc = Provider.of<AuthBloc>(context, listen: false);
     return DefaultTabController(
-      length: Home.tabPages.length,
+      length: tabPages.length,
       child: Scaffold(
         appBar: AppBar(
           actions: [
-            Padding(
-              padding: const EdgeInsets.only(
-                right: 10.0,
-                top: 10.0,
-              ),
+            Container(
               child: Ink(
                 decoration: ShapeDecoration(
                   color: BaseColors.lightCyan,
@@ -78,10 +74,10 @@ class _HomeState extends State<Home> {
             ),
           ],
           backgroundColor: BaseColors.header,
-          bottom: Home.kanbanTabBar,
+          bottom: kanbanTabBar(tabPages),
         ),
         body: TabBarView(
-          children: Home.tabPages.keys
+          children: tabPages.keys
               .map(
                 (row) => Cards(row),
               )

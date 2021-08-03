@@ -2,7 +2,8 @@
     "textfield": {
         "login": {
             "hint": "Enter your username",
-            "error": "Minimum is 4 characters"
+            "error": "Minimum is 4 characters",
+            "title": "Kanban"
         },
         "password": {
             "hint": "Enter your password",
@@ -15,7 +16,7 @@
         }
     },
     "tabbar": {
-        "header": {
+        "home": {
             "0": "On hold",
             "1": "In progress",
             "2": "Needs review",

@@ -5,8 +5,8 @@ import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
 class AuthBloc {
-  final _userName = BehaviorSubject<String>();
-  final _password = BehaviorSubject<String>();
+  final _userName = BehaviorSubject<String>()..value = "armada";
+  final _password = BehaviorSubject<String>()..value = "FSH6zBZ0p9yH";
   final _user = BehaviorSubject<AppUser>();
   final _errorMessage = BehaviorSubject<String>();
   Dio _dio = Dio();

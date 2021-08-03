@@ -3,7 +3,7 @@ import 'package:likekanban/styles/colors.dart';
 
 abstract class TextStyles {
   static TextStyle get textfieldBody {
-    return TextStyle(color: BaseColors.darkGray, fontSize: 16.0);
+    return TextStyle(color: BaseColors.pureWhite, fontSize: 16.0);
   }
 
   static TextStyle get textfieldPlaceholder {

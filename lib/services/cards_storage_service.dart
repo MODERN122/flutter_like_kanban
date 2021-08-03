@@ -5,15 +5,6 @@ class CardsStorageService {
   Dio _dio = Dio();
 
   Future<List<AppCard>> fetchCardsByRowName(String row, String token) async {
-    // var cards = List<Card>();
-    // try {
-    //   final response = await _dio
-    //       .get("https://trello.backend.tests.nekidaem.ru/api/v1/users/login/");
-    //   cards = response.data.map<Card>((card) => Card.fromJson(card)).toList();
-    // } on DioError catch (error) {
-    //   print(error);
-    // }
-    // return cards;
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (Options options) {
       _dio.interceptors.requestLock.lock();
       options.headers["Authorization"] = 'JWT $token';

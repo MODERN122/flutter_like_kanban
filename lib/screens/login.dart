@@ -16,6 +16,9 @@ class _LoginState extends State<Login> {
   Locale _currentLang;
   StreamSubscription _userChangedSubscription;
   StreamSubscription _errorMessageSubscription;
+  @override
+  // TODO: implement context
+  BuildContext get context => super.context;
 
   @override
   void initState() {
@@ -55,7 +58,7 @@ class _LoginState extends State<Login> {
     final authBloc = Provider.of<AuthBloc>(context, listen: false);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Kanban'),
+        title: Text(FlutterI18n.translate(context, "textfield.login.title")),
         actions: [
           Padding(
             padding: const EdgeInsets.only(
@@ -84,7 +87,7 @@ class _LoginState extends State<Login> {
                 return ExtendedTextField(
                   hintText:
                       FlutterI18n.translate(context, "textfield.login.hint"),
-                  textInputType: TextInputType.text,
+                  textInputType: TextInputType.name,
                   errorText:
                       FlutterI18n.translate(context, "textfield.login.error"),
                   onChanged: authBloc.changeUserName,
