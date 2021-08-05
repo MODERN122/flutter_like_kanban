@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n_delegate.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:likekanban/blocs/auth_bloc.dart';
@@ -7,6 +8,8 @@ import 'package:likekanban/styles/colors.dart';
 import 'package:likekanban/screens/home.dart';
 import 'package:likekanban/screens/login.dart';
 import 'package:provider/provider.dart';
+
+import 'global/theme/bloc/theme_bloc.dart';
 
 final authBloc = AuthBloc();
 final cardsBloc = CardsBloc();
@@ -23,6 +26,14 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
+    return BlocProvider(
+        create: (context) => ThemeBloc(),
+        child: BlocBuilder<ThemeBloc, ThemeState>(
+          builder: _builderWithTheme,
+        ));
+  }
+
+  Widget _builderWithTheme(BuildContext context, ThemeState state) {
     return MultiProvider(
         providers: [
           Provider(create: (context) => authBloc),
@@ -31,9 +42,7 @@ class _AppState extends State<App> {
         child: MaterialApp(
           home: Login(),
           onGenerateRoute: Routes.materialRoutes,
-          theme: ThemeData(
-              scaffoldBackgroundColor: BaseColors.background,
-              appBarTheme: AppBarTheme(color: BaseColors.header)),
+          theme: state.themeData,
           localizationsDelegates: [
             widget.flutterI18nDelegate,
             GlobalMaterialLocalizations.delegate,

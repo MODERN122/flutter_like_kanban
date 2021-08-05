@@ -2,10 +2,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:likekanban/blocs/auth_bloc.dart';
+import 'package:likekanban/global/theme/app_themes.dart';
+import 'package:likekanban/global/theme/bloc/theme_bloc.dart';
 import 'package:likekanban/styles/colors.dart';
 import 'package:likekanban/widgets/button.dart';
 import 'package:likekanban/widgets/textfield.dart';
 import 'package:provider/provider.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class Login extends StatefulWidget {
   @override
@@ -17,7 +20,6 @@ class _LoginState extends State<Login> {
   StreamSubscription _userChangedSubscription;
   StreamSubscription _errorMessageSubscription;
   @override
-  // TODO: implement context
   BuildContext get context => super.context;
 
   @override
@@ -58,6 +60,10 @@ class _LoginState extends State<Login> {
     });
   }
 
+  changeTheme(int index) {
+    context.read<ThemeBloc>().add(ThemeChanged(theme: AppTheme.values[index]));
+  }
+
   changeLanguage() async {
     _currentLang =
         _currentLang.languageCode == 'en' ? Locale('ru') : Locale('en');
@@ -85,7 +91,6 @@ class _LoginState extends State<Login> {
             ),
             child: Ink(
               decoration: ShapeDecoration(
-                color: BaseColors.smoke,
                 shape: CircleBorder(),
               ),
               child: IconButton(
@@ -95,6 +100,20 @@ class _LoginState extends State<Login> {
               ),
             ),
           ),
+          Padding(
+              padding: const EdgeInsets.only(
+                right: 10.0,
+              ),
+              child: ToggleSwitch(
+                totalSwitches: 2,
+                minWidth: 100,
+                initialLabelIndex: 0,
+                animate: true,
+                labels: ["GreenLight", "BlueLight", "GreenDark", "BlueDark"],
+                onToggle: (index) {
+                  changeTheme(index);
+                },
+              )),
         ],
       ),
       body: Column(

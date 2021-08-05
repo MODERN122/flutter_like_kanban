@@ -53,11 +53,11 @@ class _HomeState extends State<Home> {
       '2': FlutterI18n.translate(context, "tabbar.home.2"),
       '3': FlutterI18n.translate(context, "tabbar.home.3"),
     };
-    final authBloc = Provider.of<AuthBloc>(context, listen: false);
     return DefaultTabController(
       length: tabPages.length,
       child: Scaffold(
         appBar: AppBar(
+          title: Text(FlutterI18n.translate(context, "textfield.login.title")),
           backgroundColor: BaseColors.header,
           bottom: kanbanTabBar(tabPages),
         ),
