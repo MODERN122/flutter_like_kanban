@@ -4,6 +4,7 @@ import 'package:flutter_i18n/flutter_i18n.dart';
 import 'package:likekanban/blocs/auth_bloc.dart';
 import 'package:likekanban/global/theme/app_themes.dart';
 import 'package:likekanban/global/theme/bloc/theme_bloc.dart';
+import 'package:likekanban/services/preference_utils.dart';
 import 'package:likekanban/styles/colors.dart';
 import 'package:likekanban/widgets/button.dart';
 import 'package:likekanban/widgets/textfield.dart';
@@ -19,12 +20,18 @@ class _LoginState extends State<Login> {
   Locale _currentLang;
   StreamSubscription _userChangedSubscription;
   StreamSubscription _errorMessageSubscription;
+  int _index = 0;
   @override
   BuildContext get context => super.context;
 
   @override
   void initState() {
     final authBloc = Provider.of<AuthBloc>(context, listen: false);
+    try {
+      _index = PreferenceUtils.getInt("theme");
+    } catch (e) {
+      PreferenceUtils.setInt("theme", _index);
+    }
     // got user -> home screen
     _userChangedSubscription = authBloc.user.listen((user) {
       if (user != null) Navigator.pushNamed(context, '/home');
@@ -62,6 +69,9 @@ class _LoginState extends State<Login> {
 
   changeTheme(int index) {
     context.read<ThemeBloc>().add(ThemeChanged(theme: AppTheme.values[index]));
+    PreferenceUtils.setInt("index", index);
+    _index = index;
+    setState(() {});
   }
 
   changeLanguage() async {
@@ -101,13 +111,11 @@ class _LoginState extends State<Login> {
             ),
           ),
           Padding(
-              padding: const EdgeInsets.only(
-                right: 10.0,
-              ),
+              padding: const EdgeInsets.all(5),
               child: ToggleSwitch(
-                totalSwitches: 2,
-                minWidth: 100,
-                initialLabelIndex: 0,
+                totalSwitches: 4,
+                minWidth: 50,
+                initialLabelIndex: _index,
                 animate: true,
                 labels: ["GreenLight", "BlueLight", "GreenDark", "BlueDark"],
                 onToggle: (index) {
