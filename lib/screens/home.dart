@@ -17,9 +17,6 @@ class _HomeState extends State<Home> {
 
   TabBar kanbanTabBar(Map<String, String> tabs) {
     return TabBar(
-      unselectedLabelColor: TabBarStyles.unselectedLabelColor,
-      labelColor: TabBarStyles.labelColor,
-      indicatorColor: TabBarStyles.indicatorColor,
       tabs: tabs.values
           .map(
             (tab) => Tab(text: tab),
@@ -58,7 +55,6 @@ class _HomeState extends State<Home> {
       child: Scaffold(
         appBar: AppBar(
           title: Text(FlutterI18n.translate(context, "textfield.login.title")),
-          backgroundColor: BaseColors.header,
           bottom: kanbanTabBar(tabPages),
         ),
         body: TabBarView(

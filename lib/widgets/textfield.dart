@@ -55,7 +55,6 @@ class _ExtendedTextFieldState extends State<ExtendedTextField> {
           vertical: TextFieldStyles.textBoxVertical),
       child: TextField(
         keyboardType: widget.textInputType,
-        cursorColor: TextFieldStyles.cursorColor,
         style: TextFieldStyles.text,
         textAlign: TextFieldStyles.textAlign,
         decoration: TextFieldStyles.materialDecoration(

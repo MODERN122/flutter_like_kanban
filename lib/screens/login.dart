@@ -106,7 +106,6 @@ class _LoginState extends State<Login> {
               child: IconButton(
                 icon: Icon(Icons.language),
                 onPressed: changeLanguage,
-                color: BaseColors.pureWhite,
               ),
             ),
           ),

@@ -12,8 +12,6 @@ abstract class TextFieldStyles {
 
   static TextStyle get placeholder => TextStyles.textfieldPlaceholder;
 
-  static Color get cursorColor => BaseColors.lightCyan;
-
   static TextAlign get textAlign => TextAlign.center;
 
   static InputDecoration materialDecoration(String hintText, String errorText) {
@@ -25,20 +23,16 @@ abstract class TextFieldStyles {
       errorText: errorText,
       errorStyle: TextStyles.textfieldError,
       focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: BaseColors.lightCyan, width: BaseStyles.borderWidth),
+          borderSide: BorderSide(width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(
-              color: BaseColors.lightGray, width: BaseStyles.borderWidth),
+          borderSide: BorderSide(width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
       focusedErrorBorder: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: BaseColors.red, width: BaseStyles.borderWidth),
+          borderSide: BorderSide(width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
       errorBorder: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: BaseColors.red, width: BaseStyles.borderWidth),
+          borderSide: BorderSide(width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
     );
   }
