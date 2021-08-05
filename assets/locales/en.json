@@ -22,5 +22,10 @@
             "2": "Needs review",
             "3": "Approved"
         }
+    },
+    "alertdialog":{
+        "error": "Error",
+        "cancel": "Cancel",
+        "ok": "Ok"
     }
 }

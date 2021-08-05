@@ -1,40 +1,25 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_i18n/flutter_i18n.dart';
-import 'package:likekanban/widgets/cards.dart';
+import 'package:likekanban/global/cards/bloc/cards_bloc.dart';
+import 'package:likekanban/models/app_card.dart';
+import 'package:likekanban/widgets/card.dart';
+import 'package:provider/provider.dart';
 
-import 'bloc/cards_bloc.dart';
+String _row;
 
-class Home extends StatefulWidget {
+class Cards extends StatefulWidget {
+  Cards(String row) {
+    _row = row;
+  }
   @override
-  _HomeState createState() => _HomeState();
+  _CardsState createState() => _CardsState();
 }
 
-class _HomeState extends State<Home> {
+class _CardsState extends State<Cards> {
   StreamSubscription _userChangedSubscription;
-
-  TabBar kanbanTabBar(Map<String, String> tabs) {
-    return TabBar(
-      tabs: tabs.values
-          .map(
-            (tab) => Tab(text: tab),
-          )
-          .toList(),
-    );
-  }
-
-  @override
-  void initState() {
-    var authBloc = BlocProvider.of<CardsBloc>(context, listen: false);
-    _userChangedSubscription = authBloc.user.listen((user) {
-      if (user == null)
-        Navigator.of(context)
-            .pushNamedAndRemoveUntil('/login', (route) => false);
-    });
-    super.initState();
-  }
-
+  List<AppCard> cards;
   @override
   void dispose() {
     _userChangedSubscription.cancel();
@@ -42,40 +27,34 @@ class _HomeState extends State<Home> {
   }
 
   @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var tabPages = {
-      '0': FlutterI18n.translate(context, "tabbar.home.0"),
-      '1': FlutterI18n.translate(context, "tabbar.home.1"),
-      '2': FlutterI18n.translate(context, "tabbar.home.2"),
-      '3': FlutterI18n.translate(context, "tabbar.home.3"),
-    };
-    return DefaultTabController(
-      length: tabPages.length,
-      child: Scaffold(
-        appBar: AppBar(
-          actions: [
-            Container(
-              child: Ink(
-                decoration: ShapeDecoration(
-                  shape: CircleBorder(),
-                ),
-                child: IconButton(
-                    icon: Icon(Icons.arrow_back),
-                    onPressed: () {
-                      BlocProvider.of<CardsBloc>(context).add(CardsEvent());
-                    }),
-              ),
-            ),
-          ],
-          bottom: kanbanTabBar(tabPages),
-        ),
-        body: TabBarView(
-          children: tabPages.keys
-              .map(
-                (row) => Cards(row),
-              )
-              .toList(),
-        ),
+    return BlocProvider(
+      create: (context) => CardsBloc(),
+      child: BlocBuilder<CardsBloc, CardsState>(
+        builder: (context, state) {
+          _userChangedSubscription =
+              context.read<CardsBloc>().cards.listen((cardsRes) {
+            if (cardsRes != null) {
+              setState(() {
+                cards = cardsRes;
+              });
+            }
+          });
+          context.read<CardsBloc>().add(CardsGet(_row));
+          // got user -> home screen
+          return ListView.builder(
+            itemCount: cards?.length ?? 0,
+            itemBuilder: (context, index) {
+              var appCard = cards[index];
+              return ExtendedAppCard(appCard?.id, appCard?.text);
+            },
+          );
+        },
       ),
     );
   }

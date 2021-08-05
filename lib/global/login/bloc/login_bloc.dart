@@ -4,8 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:likekanban/models/app_user.dart';
+import 'package:likekanban/services/preference_utils.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/streams.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';
@@ -71,13 +73,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       final response = await _dio.post(
           "https://trello.backend.tests.nekidaem.ru/api/v1/users/login/",
-          data: {'username': _userName, 'password': _password});
+          data: {'username': _userName.value, 'password': _password.value});
       var user = AppUser.fromJson(response.data);
-      _user.sink.add(user);
+      if (user != null) {
+        PreferenceUtils.setString("token", user.token);
+        _user.sink.add(user);
+      }
     } on DioError catch (error) {
-      print(error);
-      var _errorMessage;
       _errorMessage.sink.add(error.message);
+      print(error);
     }
   }
 

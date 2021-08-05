@@ -2,16 +2,19 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_i18n/flutter_i18n.dart';
+import 'package:likekanban/global/cards/bloc/cards_bloc.dart';
+import 'package:likekanban/global/theme/app_themes.dart';
+import 'package:likekanban/global/theme/bloc/theme_bloc.dart';
 import 'package:likekanban/widgets/textfield.dart';
 
 import 'bloc/login_bloc.dart';
 
-class Login extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _LoginState extends State<Login> {
+class _LoginPageState extends State<LoginPage> {
   Locale _currentLang;
   StreamSubscription _userChangedSubscription;
   StreamSubscription _errorMessageSubscription;
@@ -41,20 +44,54 @@ class _LoginState extends State<Login> {
     super.dispose();
   }
 
+  bool _isDialogShow = false;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => LoginBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<LoginBloc>(
+          create: (BuildContext context) => LoginBloc(),
+        ),
+        BlocProvider<CardsBloc>(
+          create: (BuildContext context) => CardsBloc(),
+        )
+      ],
       child: BlocBuilder<LoginBloc, LoginState>(
         builder: (context, state) {
-          _loginBloc = BlocProvider.of<LoginBloc>(context);
+          _loginBloc = context.read<LoginBloc>();
           // got user -> home screen
           _userChangedSubscription = _loginBloc.user.listen((user) {
-            if (user != null) Navigator.pushReplacementNamed(context, '/home');
+            if (user != null) Navigator.pushNamed(context, '/home');
           });
           // got error message -> show
           _errorMessageSubscription = _loginBloc.errorMessage.listen((message) {
-            if (message.isNotEmpty) print(message); // showDialog??
+            if (message.toString().isNotEmpty && !_isDialogShow) {
+              _isDialogShow = true;
+              showDialog<String>(
+                context: context,
+                builder: (BuildContext context) => AlertDialog(
+                  title:
+                      Text(FlutterI18n.translate(context, "alertdialog.error")),
+                  content: Text(message),
+                  actions: <Widget>[
+                    TextButton(
+                      onPressed: () => {
+                        _isDialogShow = false,
+                        Navigator.pop(context, 'Cancel')
+                      },
+                      child: Text(
+                          FlutterI18n.translate(context, "alertdialog.cancel")),
+                    ),
+                    TextButton(
+                      onPressed: () =>
+                          {_isDialogShow = false, Navigator.pop(context, 'OK')},
+                      child: Text(
+                          FlutterI18n.translate(context, "alertdialog.ok")),
+                    ),
+                  ],
+                ),
+              );
+            }
           });
           return Scaffold(
             appBar: AppBar(
@@ -72,6 +109,24 @@ class _LoginState extends State<Login> {
                     child: IconButton(
                       icon: Icon(Icons.language),
                       onPressed: changeLanguage,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(
+                    right: 10.0,
+                  ),
+                  child: Ink(
+                    decoration: ShapeDecoration(
+                      shape: CircleBorder(),
+                    ),
+                    child: IconButton(
+                      icon: Icon(Icons.settings),
+                      onPressed: () {
+                        context
+                            .read<ThemeBloc>()
+                            .add(ThemeChanged(theme: AppTheme.BlueDark));
+                      },
                     ),
                   ),
                 ),

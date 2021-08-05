@@ -6,3 +6,8 @@ class CardsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class CardsGet extends CardsEvent {
+  String row;
+  CardsGet(this.row);
+}

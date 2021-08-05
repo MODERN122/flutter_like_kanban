@@ -1,8 +1,8 @@
 part of 'cards_bloc.dart';
 
 abstract class CardsState extends Equatable {
-  const CardsState();
-  
+  CardsState({@required this.token});
+  final String token;
   @override
   List<Object> get props => [];
 }
