@@ -1,5 +1,6 @@
 import 'package:likekanban/models/app_card.dart';
 import 'package:likekanban/services/cards_storage_service.dart';
+import 'package:likekanban/services/preference_utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 class CardsBloc {
@@ -12,8 +13,8 @@ class CardsBloc {
   // Setters
   Function(List<AppCard>) get changeCards => _cards.sink.add;
 
-  Stream<List<AppCard>> fetchCardsByRowName(String row, String token) => _db
-      .fetchCardsByRowName(row, token)
+  Stream<List<AppCard>> fetchCardsByRowName(String row) => _db
+      .fetchCardsByRowName(row, PreferenceUtils.getString("token"))
       .catchError((error) => print(error))
       .asStream();
 

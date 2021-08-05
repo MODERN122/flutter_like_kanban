@@ -58,21 +58,6 @@ class _HomeState extends State<Home> {
       length: tabPages.length,
       child: Scaffold(
         appBar: AppBar(
-          actions: [
-            Container(
-              child: Ink(
-                decoration: ShapeDecoration(
-                  color: BaseColors.lightCyan,
-                  shape: CircleBorder(),
-                ),
-                child: IconButton(
-                  icon: Icon(Icons.arrow_back),
-                  onPressed: authBloc.logout,
-                  color: BaseColors.pureWhite,
-                ),
-              ),
-            ),
-          ],
           backgroundColor: BaseColors.header,
           bottom: kanbanTabBar(tabPages),
         ),

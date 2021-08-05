@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:dio/dio.dart';
 import 'package:likekanban/models/app_user.dart';
+import 'package:likekanban/services/preference_utils.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:rxdart/subjects.dart';
 
@@ -60,7 +61,10 @@ class AuthBloc {
             'password': _password.value.trim()
           });
       var user = AppUser.fromJson(response.data);
-      _user.sink.add(user);
+      if (user != null) {
+        PreferenceUtils.setString("token", user.token);
+        _user.sink.add(user);
+      }
     } on DioError catch (error) {
       print(error);
       _errorMessage.sink.add(error.message);

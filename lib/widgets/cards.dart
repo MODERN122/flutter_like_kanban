@@ -11,10 +11,9 @@ class Cards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var authBloc = Provider.of<AuthBloc>(context);
     var cardsBloc = Provider.of<CardsBloc>(context);
     return StreamBuilder<List<AppCard>>(
-      stream: cardsBloc.fetchCardsByRowName(row, authBloc.userToken),
+      stream: cardsBloc.fetchCardsByRowName(row),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(

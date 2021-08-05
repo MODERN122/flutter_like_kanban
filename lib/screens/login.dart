@@ -25,7 +25,7 @@ class _LoginState extends State<Login> {
     final authBloc = Provider.of<AuthBloc>(context, listen: false);
     // got user -> home screen
     _userChangedSubscription = authBloc.user.listen((user) {
-      if (user != null) Navigator.pushReplacementNamed(context, '/home');
+      if (user != null) Navigator.pushNamed(context, '/home');
     });
     // got error message -> show
     _errorMessageSubscription = authBloc.errorMessage.listen((message) {
