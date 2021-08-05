@@ -26,13 +26,16 @@ abstract class TextFieldStyles {
           borderSide: BorderSide(width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
       enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: BaseStyles.borderWidth),
+          borderSide:
+              BorderSide(color: BaseColors.red, width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
       focusedErrorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: BaseStyles.borderWidth),
+          borderSide:
+              BorderSide(color: BaseColors.red, width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
       errorBorder: OutlineInputBorder(
-          borderSide: BorderSide(width: BaseStyles.borderWidth),
+          borderSide:
+              BorderSide(color: BaseColors.red, width: BaseStyles.borderWidth),
           borderRadius: BorderRadius.circular(BaseStyles.borderRadius)),
     );
   }

@@ -28,7 +28,7 @@ class ExtendedAppCard extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.all(5.0),
-            child: Text('ID: $id', style: TextStyles.cardTitle),
+            child: Text('ID: $id'),
           ),
           Padding(
             padding: const EdgeInsets.all(5.0),
