@@ -29,7 +29,26 @@ class _LoginState extends State<Login> {
     });
     // got error message -> show
     _errorMessageSubscription = authBloc.errorMessage.listen((message) {
-      if (message.isNotEmpty) print(message); // showDialog??
+      if (message.toString().isNotEmpty) {
+        showDialog<String>(
+          context: context,
+          builder: (BuildContext context) => AlertDialog(
+            title: Text(FlutterI18n.translate(context, "alertdialog.error")),
+            content: Text(message),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () => {Navigator.pop(context, 'Cancel')},
+                child:
+                    Text(FlutterI18n.translate(context, "alertdialog.cancel")),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(context, 'OK'),
+                child: Text(FlutterI18n.translate(context, "alertdialog.ok")),
+              ),
+            ],
+          ),
+        );
+      }
     });
     super.initState();
     Future.delayed(Duration.zero, () async {
